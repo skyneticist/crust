@@ -1,6 +1,7 @@
 use crate::actions::log_commits;
 use crate::add_commit_push;
 use crate::get_status;
+use crate::types::Actions::{Acp, Log, Status};
 use crate::Cli;
 
 pub struct CrustConfig {
@@ -33,20 +34,41 @@ impl Crust {
 
 impl Crust {
     pub fn run_cmd(args: Cli) {
-        // enum candidates? mmhmm
-        let _acp_cmd = String::from("acp");
-        let _log = String::from("log");
-        let _status = String::from("status");
-
         let sub_cmd = args.arg.unwrap_or_else(|| "".to_string());
 
         let output = match args.command {
-            x if x == _acp_cmd => add_commit_push(Some(true), sub_cmd),
-            x if x == _status => get_status(),
-            x if x == _log => log_commits(sub_cmd),
+            x if x == Acp.value() => Acp.method(sub_cmd),
+            x if x == Status.value() => Status.method(log_commits(sub_cmd)),
+            x if x == Log.value() => Log.method(sub_cmd),
             _ => String::from("unknown command: ") + &args.command,
         };
         println!("{}", output);
+    }
+}
+
+pub enum Actions {
+    Acp,
+    Log,
+    Status,
+}
+
+impl Actions {
+    pub fn value(&self) -> String {
+        match *self {
+            Actions::Acp => String::from("acp"),
+            Actions::Log => String::from("log"),
+            Actions::Status => String::from("status"),
+        }
+    }
+}
+
+impl Actions {
+    pub fn method(&self, sub_cmd: String) -> String {
+        match *self {
+            Actions::Acp => add_commit_push(Some(true), sub_cmd),
+            Actions::Log => log_commits(sub_cmd),
+            Actions::Status => get_status(),
+        }
     }
 }
 
