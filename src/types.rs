@@ -1,42 +1,45 @@
+use crate::add_commit_push;
 use crate::get_status;
 use crate::log_commits;
-use crate::add_commit_push;
 use crate::Cli;
 
-pub struct Crust  {
-    config: CrustConfig
+pub struct CrustConfig {
+    pub verbosity: Option<u8>,
+    pub hide: Option<bool>,
+    pub dump_location: Option<String>,
+    pub ee_img_path: Option<String>,
 }
 
-pub struct CrustConfig {
-    verbosity: Option<u8>,
-    hide: Option<bool>,
-    dump_location: Option<String>,
-    ee_img_path: Option<String>,
+pub struct Crust {
+    pub config: CrustConfig,
 }
 
 impl Crust {
     pub fn new(crust_fig: Option<CrustConfig>) -> Self {
-        let default_config = CrustConfig { verbosity: Some(2), hide: Some(false), dump_location: Some(String::from("./")), ee_img_path: None };
+        let default_config = CrustConfig {
+            verbosity: Some(2),
+            hide: Some(false),
+            dump_location: Some(String::from("./")),
+            ee_img_path: None,
+        };
         let config = match crust_fig {
             Some(config) => config,
             None => default_config,
         };
 
-        let crust  = Crust { config: config };
-
-        return crust;
+        return Crust { config: config };
     }
 }
 
 impl Crust {
-    pub fn run_cmd(args: Cli)  {
+    pub fn run_cmd(args: Cli) {
         let _acp_cmd = String::from("acp");
         let _log = String::from("log");
         let _status = String::from("status");
         let output = match args.command {
             x if x == _acp_cmd => add_commit_push(Some(true), args.message),
             x if x == _status => get_status(),
-            x if x == _log => log_commits(true, false, None),
+            x if x == _log => log_commits(false, false, None),
             _ => String::from("command not found"),
         };
         println!("{}", String::from(output));
