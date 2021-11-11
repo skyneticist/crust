@@ -50,9 +50,22 @@ pub fn get_status() -> String {
     return run_git_cmd(Status, None);
 }
 
-pub fn log_commits(pithy: bool, dump: bool, filter: Option<String>) -> String {
+pub fn log_commits(pithy: String, dump: String, filter: Option<String>) -> String {
+
+    if dump == "save" {
+        println!("{}", String::from("This be a save"));
+    };
+    let f = match filter {
+        Some(filter_val) => filter_val,
+        None => String::from(""), 
+    };
+
+    if f != String::from("") {
+        println!("filter was applied!");
+    };
+
     let mut sub_cmd: Vec<String> = Vec::new();
-    if pithy {
+    if pithy == "ol" {
         &sub_cmd.push(String::from("--pretty=oneline"));
     }
     return run_git_cmd(Log, Some(sub_cmd));
