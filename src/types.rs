@@ -38,7 +38,7 @@ impl Crust {
 
         let output = match args.command {
             x if x == Acp.value() => Acp.method(sub_cmd),
-            x if x == Status.value() => Status.method(log_commits(sub_cmd)),
+            x if x == Status.value() => Status.method(sub_cmd),
             x if x == Log.value() => Log.method(sub_cmd),
             _ => String::from("unknown command: ") + &args.command,
         };
