@@ -1,14 +1,12 @@
 # crust 🍞
+![image](https://user-images.githubusercontent.com/81132371/141219125-ea8111e1-d17e-4eb7-a60e-0dfcf38ddfb8.png) <img src="https://user-images.githubusercontent.com/81132371/140827751-38418c3a-8188-4adb-b844-67e641d06b9f.png" width="225" height="200">
 
 
 cli tool for git productivity 
 
-
-![image](https://user-images.githubusercontent.com/81132371/141219125-ea8111e1-d17e-4eb7-a60e-0dfcf38ddfb8.png) 
-
 *written in Rust and packaged for consumption via NPM*
 
-This repo is identical with @skyneticist/golee in terms of functionality and purpose: Increase productivity working with git in command-line.
+This repo is identical with [@skyneticist/golee](https://github.com/skyneticist/golee) in terms of functionality and purpose: Increase productivity working with git in command-line.
 
 Of course, crust 🍞 is written in Rust instead of Go. 
 
