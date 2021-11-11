@@ -33,11 +33,18 @@ impl Crust {
 
 impl Crust {
     pub fn run_cmd(args: Cli) {
+        // enum candidates? mmhmm
         let _acp_cmd = String::from("acp");
         let _log = String::from("log");
         let _status = String::from("status");
+
+        let msg = match args.message {
+            Some(msg) => msg,
+            None => String::from(""),
+        };
+
         let output = match args.command {
-            x if x == _acp_cmd => add_commit_push(Some(true), args.message),
+            x if x == _acp_cmd => add_commit_push(Some(true), msg),
             x if x == _status => get_status(),
             x if x == _log => log_commits(false, false, None),
             _ => String::from("command not found"),

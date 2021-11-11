@@ -2,14 +2,14 @@ mod actions;
 mod types;
 
 // use crate::types::CrustConfig;
-use crate::actions::*;
+use crate::actions::{add_commit_push, get_status, log_commits};
 use crate::types::Crust;
 use structopt::StructOpt;
 
 #[derive(StructOpt)]
 pub struct Cli {
     command: String,
-    message: String,
+    message: Option<String>,
 }
 
 fn main() {
