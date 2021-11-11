@@ -15,6 +15,6 @@ pub struct Cli {
 }
 
 fn main() {
-    // Crust::new(Some(crusty_config));
+    Crust::new(None);
     Crust::run_cmd(Cli::from_args());
 }
