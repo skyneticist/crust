@@ -2,7 +2,7 @@ mod actions;
 mod types;
 
 // use crate::types::CrustConfig;
-use crate::actions::{add_commit_push, get_status, log_commits};
+use crate::actions::{add_commit_push, get_status};
 use crate::types::Crust;
 use structopt::StructOpt;
 
@@ -10,8 +10,8 @@ use structopt::StructOpt;
 pub struct Cli {
     command: String,
     arg1: Option<String>,
-    arg2: Option<String>,
-    arg3: Option<String>,
+    // arg2: Option<String>,
+    // arg3: Option<String>,
 }
 
 fn main() {

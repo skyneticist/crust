@@ -1,6 +1,5 @@
 use crate::add_commit_push;
 use crate::get_status;
-use crate::log_commits;
 use crate::Cli;
 
 pub struct CrustConfig {
@@ -43,28 +42,24 @@ impl Crust {
             None => String::from(""),
         };
 
-        let tertiary_cmd = match args.arg2 {
-            Some(value) => subcmd_check(value),
-            None => String::from(""),
-        };
+        // let tertiary_cmd = match args.arg2 {
+        //     Some(value) => value,
+        //     None => String::from(""),
+        // };
 
-        let last_cmd = match args.arg3 {
-            Some(value) => subcmd_check(value),
-            None => String::from(""),
-        };
+        // let last_cmd = match args.arg3 {
+        //     Some(value) => value,
+        //     None => String::from(""),
+        // };
 
         let output = match args.command {
             x if x == _acp_cmd => add_commit_push(Some(true), sub_cmd),
             x if x == _status => get_status(),
-            x if x == _log => log_commits(sub_cmd, tertiary_cmd, Some(last_cmd)),
+            // x if x == _log => log_commits(sub_cmd, tertiary_cmd, Some(last_cmd)),
             _ => String::from("command not found"),
         };
         println!("{}", output);
     }
-}
-
-fn subcmd_check(subcmd: String) -> String {
-    return subcmd;
 }
 
 pub enum RootCmd {
@@ -87,7 +82,7 @@ impl RootCmd {
 pub enum GitCommands {
     Add,
     Commit,
-    Log,
+    // Log,
     Push,
     // Pull,
     // Stash,
@@ -105,7 +100,7 @@ impl GitCommands {
         match *self {
             GitCommands::Add => String::from("add"),
             GitCommands::Commit => String::from("commit"),
-            GitCommands::Log => String::from("log"),
+            // GitCommands::Log => String::from("log"),
             GitCommands::Push => String::from("push"),
             // GitCommands::Pull => String::from("pull"),
             // GitCommands::Stash => String::from("stash"),
