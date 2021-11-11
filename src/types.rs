@@ -38,16 +38,13 @@ impl Crust {
         let _log = String::from("log");
         let _status = String::from("status");
 
-        let sub_cmd = match args.arg1 {
-            Some(msg) => msg,
-            None => String::from(""),
-        };
+        let sub_cmd = args.arg.unwrap_or_else(|| "".to_string());
 
         let output = match args.command {
             x if x == _acp_cmd => add_commit_push(Some(true), sub_cmd),
             x if x == _status => get_status(),
             x if x == _log => log_commits(sub_cmd),
-            _ => String::from("command not found"),
+            _ => String::from("unknown command: ") + &args.command,
         };
         println!("{}", output);
     }

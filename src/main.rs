@@ -9,7 +9,7 @@ use structopt::StructOpt;
 #[derive(StructOpt)]
 pub struct Cli {
     command: String,
-    arg1: Option<String>,
+    arg: Option<String>,
     // arg2: Option<String>,
     // arg3: Option<String>,
 }
