@@ -14,22 +14,22 @@ pub struct Crust {
     pub config: CrustConfig,
 }
 
-impl Crust {
-    pub fn new(crust_fig: Option<CrustConfig>) -> Self {
-        let default_config = CrustConfig {
-            verbosity: Some(2),
-            hide: Some(false),
-            dump_location: Some(String::from("./")),
-            ee_img_path: None,
-        };
-        let config = match crust_fig {
-            Some(config) => config,
-            None => default_config,
-        };
+// impl Crust {
+//     pub fn new(crust_fig: Option<CrustConfig>) -> Self {
+//         let default_config = CrustConfig {
+//             verbosity: Some(2),
+//             hide: Some(false),
+//             dump_location: Some(String::from("./")),
+//             ee_img_path: None,
+//         };
+//         let config = match crust_fig {
+//             Some(config) => config,
+//             None => default_config,
+//         };
 
-        return Crust { config: config };
-    }
-}
+//         return Crust { config };
+//     }
+// }
 
 impl Crust {
     pub fn run_cmd(args: Cli) {
@@ -59,7 +59,7 @@ impl Crust {
             x if x == _log => log_commits(sub_cmd, tertiary_cmd, Some(last_cmd)),
             _ => String::from("command not found"),
         };
-        println!("{}", String::from(output));
+        println!("{}", output);
     }
 }
 
@@ -89,14 +89,14 @@ pub enum GitCommands {
     Commit,
     Log,
     Push,
-    Pull,
-    Stash,
-    Revert,
-    Pop,
-    Apply,
-    Reset,
-    Hard,
-    Soft,
+    // Pull,
+    // Stash,
+    // Revert,
+    // Pop,
+    // Apply,
+    // Reset,
+    // Hard,
+    // Soft,
     Status,
 }
 
@@ -107,14 +107,14 @@ impl GitCommands {
             GitCommands::Commit => String::from("commit"),
             GitCommands::Log => String::from("log"),
             GitCommands::Push => String::from("push"),
-            GitCommands::Pull => String::from("pull"),
-            GitCommands::Stash => String::from("stash"),
-            GitCommands::Reset => String::from("reset"),
-            GitCommands::Revert => String::from("revert"),
-            GitCommands::Pop => String::from("pop"),
-            GitCommands::Apply => String::from("apply"),
-            GitCommands::Hard => String::from("hard"),
-            GitCommands::Soft => String::from("soft"),
+            // GitCommands::Pull => String::from("pull"),
+            // GitCommands::Stash => String::from("stash"),
+            // GitCommands::Reset => String::from("reset"),
+            // GitCommands::Revert => String::from("revert"),
+            // GitCommands::Pop => String::from("pop"),
+            // GitCommands::Apply => String::from("apply"),
+            // GitCommands::Hard => String::from("hard"),
+            // GitCommands::Soft => String::from("soft"),
             GitCommands::Status => String::from("status"),
         }
     }
