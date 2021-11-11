@@ -1,6 +1,7 @@
 mod actions;
 mod types;
 
+use crate::types::Crust;
 use crate::actions::*;
 use structopt::StructOpt;
 
@@ -24,5 +25,7 @@ fn run_cmd(args: Cli) {
 }
 
 fn main() {
+    let crust = Crust::new(None);
+    Crust::run_cmd(Cli::from_args());
     run_cmd(Cli::from_args());
 }

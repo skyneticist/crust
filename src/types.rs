@@ -1,5 +1,54 @@
+use crate::get_status;
+use crate::log_commits;
+use crate::add_commit_push;
+use crate::Cli;
+
+pub struct Crust  {
+    config: CrustConfig
+}
+
+pub struct CrustConfig {
+    verbosity: Option<u8>,
+    hide: Option<bool>,
+    dump_location: Option<String>,
+    ee_img_path: Option<String>,
+}
+
+impl Crust {
+    pub fn new(crust_fig: Option<CrustConfig>) -> Self {
+        let default_config = CrustConfig { verbosity: Some(2), hide: Some(false), dump_location: Some(String::from("./")), ee_img_path: None };
+        let config = match crust_fig {
+            Some(config) => config,
+            None => default_config,
+        };
+
+        let crust  = Crust { config: config };
+
+        return crust;
+    }
+}
+
+impl Crust {
+    pub fn run_cmd(args: Cli)  {
+        let _acp_cmd = String::from("acp");
+        let _log = String::from("log");
+        let _status = String::from("status");
+        let output = match args.command {
+            x if x == _acp_cmd => add_commit_push(Some(true), args.message),
+            x if x == _status => get_status(),
+            x if x == _log => log_commits(true, false, None),
+            _ => String::from("command not found"),
+        };
+        println!("{}", String::from(output));
+    }
+}
+
 pub enum RootCmd {
     Git,
+    // Bash,
+    // Ps,
+    // Node,
+    // Python,
 }
 
 impl RootCmd {
