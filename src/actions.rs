@@ -50,18 +50,23 @@ pub fn get_status() -> String {
     return run_git_cmd(Status, None);
 }
 
-pub fn log_commits(pithy: String, dump: String, filter: Option<String>) -> String {
+pub fn log_commits(pithy: String, args: Option<Vec<String>>) -> String {
 
-    if dump == "save" {
-        println!("{}", String::from("This be a save"));
-    };
-    let f = match filter {
-        Some(filter_val) => filter_val,
-        None => String::from(""), 
-    };
+    // if dump == "save" {
+    //     println!("{}", String::from("This be a save"));
+    // };
+    // let f = match filter {
+    //     Some(filter_val) => filter_val,
+    //     None => String::from(""), 
+    // };
 
-    if f != String::from("") {
-        println!("filter was applied!");
+    // if f != String::from("") {
+    //     println!("filter was applied!");
+    // };
+
+    let other_args = match args {
+        Some(_args) => parse_args(_args),
+        None => Vec::new(),
     };
 
     let mut sub_cmd: Vec<String> = Vec::new();
@@ -69,4 +74,10 @@ pub fn log_commits(pithy: String, dump: String, filter: Option<String>) -> Strin
         &sub_cmd.push(String::from("--pretty=oneline"));
     }
     return run_git_cmd(Log, Some(sub_cmd));
+}
+
+fn parse_args(args: Vec<String>) {
+    return match args {
+        
+    }
 }
