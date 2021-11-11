@@ -1,4 +1,7 @@
 # crust
+
+![image](https://user-images.githubusercontent.com/81132371/141219125-ea8111e1-d17e-4eb7-a60e-0dfcf38ddfb8.png) 
+
 cli tool for git productivity 
 
 *written in Rust and packaged for consumption via NPM*
@@ -17,3 +20,4 @@ Goals:
   - Learn Rust as best as possible 
   - Package Rust binaries and publish them to be consumed via npmjs (just like golee repo/project)
 
+![image](https://user-images.githubusercontent.com/81132371/141218976-a2cc5d01-ae9d-4aba-b360-fcf9caad3caa.png)
