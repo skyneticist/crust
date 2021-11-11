@@ -1,4 +1,4 @@
-use crate::types::GitCommands::{Add, Commit, Push, Status};
+use crate::types::GitCommands::{Add, Commit, Log, Push, Status};
 use crate::types::RootCmd::Git;
 use crate::types::*;
 use std::process::Command;
@@ -37,31 +37,17 @@ pub fn add_commit_push(remote: Option<bool>, commit_msg: String) -> String {
         false => vec![],
     };
 
-    let output = run_git_cmd(Push, Some(remote_push_args));
-    return output;
+    run_git_cmd(Push, Some(remote_push_args))
 }
 
 pub fn get_status() -> String {
-    return run_git_cmd(Status, None);
+    run_git_cmd(Status, None)
 }
 
-// pub fn log_commits(pithy: String, dump: String, filter: Option<String>) -> String {
-
-//     if dump == "save" {
-//         println!("{}", String::from("This be a save"));
-//     };
-//     let f = match filter {
-//         Some(filter_val) => filter_val,
-//         None => String::from(""),
-//     };
-
-//     if f != String::from("") {
-//         println!("filter was applied!");
-//     };
-
-//     let mut sub_cmd: Vec<String> = Vec::new();
-//     if pithy == "ol" {
-//         &sub_cmd.push(String::from("--pretty=oneline"));
-//     }
-//     return run_git_cmd(Log, Some(sub_cmd));
-// }
+pub fn log_commits(pithy: String) -> String {
+    let mut sub_cmd: Vec<String> = vec![];
+    if pithy == "ol" {
+        sub_cmd.push(String::from("--pretty=oneline"));
+    }
+    run_git_cmd(Log, Some(sub_cmd))
+}

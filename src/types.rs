@@ -1,3 +1,4 @@
+use crate::actions::log_commits;
 use crate::add_commit_push;
 use crate::get_status;
 use crate::Cli;
@@ -13,22 +14,22 @@ pub struct Crust {
     pub config: CrustConfig,
 }
 
-// impl Crust {
-//     pub fn new(crust_fig: Option<CrustConfig>) -> Self {
-//         let default_config = CrustConfig {
-//             verbosity: Some(2),
-//             hide: Some(false),
-//             dump_location: Some(String::from("./")),
-//             ee_img_path: None,
-//         };
-//         let config = match crust_fig {
-//             Some(config) => config,
-//             None => default_config,
-//         };
+impl Crust {
+    pub fn new(crust_fig: Option<CrustConfig>) -> Self {
+        let default_config = CrustConfig {
+            verbosity: Some(2),
+            hide: Some(false),
+            dump_location: Some(String::from("./")),
+            ee_img_path: None,
+        };
+        let config = match crust_fig {
+            Some(config) => config,
+            None => default_config,
+        };
 
-//         return Crust { config };
-//     }
-// }
+        Crust { config }
+    }
+}
 
 impl Crust {
     pub fn run_cmd(args: Cli) {
@@ -42,20 +43,10 @@ impl Crust {
             None => String::from(""),
         };
 
-        // let tertiary_cmd = match args.arg2 {
-        //     Some(value) => value,
-        //     None => String::from(""),
-        // };
-
-        // let last_cmd = match args.arg3 {
-        //     Some(value) => value,
-        //     None => String::from(""),
-        // };
-
         let output = match args.command {
             x if x == _acp_cmd => add_commit_push(Some(true), sub_cmd),
             x if x == _status => get_status(),
-            // x if x == _log => log_commits(sub_cmd, tertiary_cmd, Some(last_cmd)),
+            x if x == _log => log_commits(sub_cmd),
             _ => String::from("command not found"),
         };
         println!("{}", output);
@@ -82,8 +73,9 @@ impl RootCmd {
 pub enum GitCommands {
     Add,
     Commit,
-    // Log,
+    Log,
     Push,
+    Status,
     // Pull,
     // Stash,
     // Revert,
@@ -92,7 +84,6 @@ pub enum GitCommands {
     // Reset,
     // Hard,
     // Soft,
-    Status,
 }
 
 impl GitCommands {
@@ -100,8 +91,9 @@ impl GitCommands {
         match *self {
             GitCommands::Add => String::from("add"),
             GitCommands::Commit => String::from("commit"),
-            // GitCommands::Log => String::from("log"),
+            GitCommands::Log => String::from("log"),
             GitCommands::Push => String::from("push"),
+            GitCommands::Status => String::from("status"),
             // GitCommands::Pull => String::from("pull"),
             // GitCommands::Stash => String::from("stash"),
             // GitCommands::Reset => String::from("reset"),
@@ -110,7 +102,6 @@ impl GitCommands {
             // GitCommands::Apply => String::from("apply"),
             // GitCommands::Hard => String::from("hard"),
             // GitCommands::Soft => String::from("soft"),
-            GitCommands::Status => String::from("status"),
         }
     }
 }
