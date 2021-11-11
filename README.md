@@ -1,4 +1,7 @@
 # crust 🍞
+
+[![Rust Report Card](https://rust-reportcard.xuri.me/badge/github.com/skyneticist/crust)](https://rust-reportcard.xuri.me/report/github.com/skyneticist/crust)
+
 ![image](https://user-images.githubusercontent.com/81132371/141219125-ea8111e1-d17e-4eb7-a60e-0dfcf38ddfb8.png) <img src="https://user-images.githubusercontent.com/81132371/140827751-38418c3a-8188-4adb-b844-67e641d06b9f.png" width="225" height="200">
 
 
