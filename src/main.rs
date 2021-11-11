@@ -1,12 +1,11 @@
 use crate::GitCommands::*;
 use crate::RootCmd::*;
-use ::std::error::Error;
 use std::process::Command;
 use structopt::StructOpt;
 
 #[derive(StructOpt)]
 struct Cli {
-    command: String,
+    // command: String,
     message: String,
 }
 
@@ -19,12 +18,6 @@ impl RootCmd {
         match *self {
             RootCmd::Git => String::from("git"),
         }
-    }
-}
-
-impl RootCmd {
-    pub fn as_ref(&self) -> &RootCmd {
-        (*self).as_ref()
     }
 }
 
@@ -62,12 +55,6 @@ impl GitCommands {
             GitCommands::Soft => String::from("soft"),
             GitCommands::Status => String::from("status"),
         }
-    }
-}
-
-impl GitCommands {
-    pub fn as_ref(&self) -> &GitCommands {
-        (*self).as_ref()
     }
 }
 
@@ -137,7 +124,7 @@ fn get_status() -> String {
     return run_git_cmd(Status, None);
 }
 
-fn log_commits(pithy: bool, dump: bool, filter: Option<String>) -> String {
+fn log_commits(pithy: bool, _dump: bool, _filter: Option<String>) -> String {
     let mut sub_cmd: Vec<String> = Vec::new();
     if pithy {
         &sub_cmd.push(String::from("--pretty=oneline"));
