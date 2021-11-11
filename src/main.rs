@@ -1,82 +1,147 @@
-use std::io;
-use std::io::Write;
+use crate::GitCommands::*;
+use crate::RootCmd::*;
+use ::std::error::Error;
 use std::process::Command;
 use structopt::StructOpt;
 
-/// Search for a pattern in a file and display the lines that contain it.
 #[derive(StructOpt)]
 struct Cli {
     command: String,
-    message: Option<String>,
+    message: String,
+}
+
+enum RootCmd {
+    Git,
+}
+
+impl RootCmd {
+    pub fn value(&self) -> String {
+        match *self {
+            RootCmd::Git => String::from("git"),
+        }
+    }
+}
+
+impl RootCmd {
+    pub fn as_ref(&self) -> &RootCmd {
+        (*self).as_ref()
+    }
 }
 
 #[derive(StructOpt)]
-struct GitCmd {
-    command: String,
+enum GitCommands {
+    Add,
+    Commit,
+    Log,
+    Push,
+    Pull,
+    Stash,
+    Revert,
+    Pop,
+    Apply,
+    Reset,
+    Hard,
+    Soft,
+    Status,
 }
 
-impl GitCmd {
-    pub fn execute(sub_commands: GitCmd) -> std::process::Output {
-        let output = Command::new("git")
-            .arg(sub_commands.command)
-            .output()
-            .expect("problem executing git command");
+impl GitCommands {
+    pub fn value(&self) -> String {
+        match *self {
+            GitCommands::Add => String::from("add"),
+            GitCommands::Commit => String::from("commit"),
+            GitCommands::Log => String::from("log"),
+            GitCommands::Push => String::from("push"),
+            GitCommands::Pull => String::from("pull"),
+            GitCommands::Stash => String::from("stash"),
+            GitCommands::Reset => String::from("reset"),
+            GitCommands::Revert => String::from("revert"),
+            GitCommands::Pop => String::from("pop"),
+            GitCommands::Apply => String::from("apply"),
+            GitCommands::Hard => String::from("hard"),
+            GitCommands::Soft => String::from("soft"),
+            GitCommands::Status => String::from("status"),
+        }
+    }
+}
 
-        return output;
+impl GitCommands {
+    pub fn as_ref(&self) -> &GitCommands {
+        (*self).as_ref()
     }
 }
 
 fn main() {
     let args = Cli::from_args();
-    let git_cmd = GitCmd::from_args();
 
-    // GitCmd::execute(git_cmd);
+    // let msg: Result<String, Box<dyn Error>> = match args.message {
+    //     Some(msg) => Ok(msg),
+    //     None => Ok(String::from("")),
+    // };
+    // println!("{:?}", msg);
 
-    let msg: Result<String, Err> = match args.message {
-        Some(msg) => Ok(msg),
-        None => Ok(String::from("")),
+    let log_out = log_commits(true, false, None);
+    println!("{}", log_out);
+
+    let status_out = get_status();
+    println!("{}", status_out);
+
+    let acpr_out = add_commit_push(Some(true), args.message);
+    println!("{}", acpr_out);
+}
+
+fn run_git_cmd(arg: GitCommands, sub_args: Option<Vec<String>>) -> String {
+    let sub_args = match sub_args {
+        Some(values) => values,
+        None => Vec::new(),
     };
 
-    if args.command == "acp" {
-        add_commit_push(msg.unwrap());
-    } else if args.command == "st" {
-        let data = log_commits();
-        io::stdout().write_all(&data).unwrap();
+    let output = Command::new(Git.value())
+        .arg(arg.value())
+        .args(sub_args)
+        .output()
+        .expect("error at run_git_cmd");
 
-        // println!("{:?}", log_commits());
+    match String::from_utf8(output.stdout) {
+        Ok(output_str) => output_str,
+        Err(_) => String::from("Error has occurred at from_utf8 method"),
     }
 }
 
-fn add_commit_push(commit_msg: String) {
-    let git_cmd = GitCmd {
-        command: "status".to_string(),
+fn add_commit_push(remote: Option<bool>, commit_msg: String) -> String {
+    run_git_cmd(Add, Some(vec![String::from(".")]));
+
+    let mut sub_args = Vec::new();
+    sub_args.push(String::from("-m"));
+    sub_args.push(commit_msg);
+    run_git_cmd(Commit, Some(sub_args));
+
+    let is_fresh = match remote {
+        Some(value) => value,
+        None => false,
     };
-    GitCmd::execute(git_cmd);
-    Command::new("git")
-        .arg("add")
-        .arg(".")
-        .output()
-        .expect("crust acp did not run successfully");
 
-    Command::new("git")
-        .arg("commit")
-        .arg("-m")
-        .arg(commit_msg)
-        .output()
-        .expect("trouble committing to repo");
+    if is_fresh {
+        let mut remote_push_args = Vec::new();
+        remote_push_args.push(String::from("-u"));
+        remote_push_args.push(String::from("origin"));
+        remote_push_args.push(String::from("HEAD"));
 
-    Command::new("git")
-        .arg("push")
-        .output()
-        .expect("trouble pushing commit to repo");
+        return run_git_cmd(Push, Some(remote_push_args));
+    }
+
+    return String::from("");
 }
 
-fn log_commits() -> Vec<u8> {
-    let output = Command::new("git")
-        .arg("log")
-        .arg("--pretty=oneline")
-        .output()
-        .expect("problem running git log");
+fn get_status() -> String {
+    return run_git_cmd(Status, None);
+}
 
-    return output.stdout;
+fn log_commits(pithy: bool, dump: bool, filter: Option<String>) -> String {
+    let mut sub_cmd: Vec<String> = Vec::new();
+    if pithy {
+        &sub_cmd.push(String::from("--pretty=oneline"));
+    }
+    println!("{:?}", sub_cmd);
+    return run_git_cmd(Log, Some(sub_cmd));
 }
