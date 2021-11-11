@@ -9,7 +9,9 @@ use structopt::StructOpt;
 #[derive(StructOpt)]
 pub struct Cli {
     command: String,
-    message: Option<String>,
+    arg1: Option<String>,
+    arg2: Option<String>,
+    arg3: Option<String>,
 }
 
 fn main() {

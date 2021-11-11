@@ -38,19 +38,33 @@ impl Crust {
         let _log = String::from("log");
         let _status = String::from("status");
 
-        let msg = match args.message {
+        let sub_cmd = match args.arg1 {
             Some(msg) => msg,
             None => String::from(""),
         };
 
+        let tertiary_cmd = match args.arg2 {
+            Some(value) => subcmd_check(value),
+            None => String::from(""),
+        };
+
+        let last_cmd = match args.arg3 {
+            Some(value) => subcmd_check(value),
+            None => String::from(""),
+        };
+
         let output = match args.command {
-            x if x == _acp_cmd => add_commit_push(Some(true), msg),
+            x if x == _acp_cmd => add_commit_push(Some(true), sub_cmd),
             x if x == _status => get_status(),
-            x if x == _log => log_commits(false, false, None),
+            x if x == _log => log_commits(sub_cmd, tertiary_cmd, Some(last_cmd)),
             _ => String::from("command not found"),
         };
         println!("{}", String::from(output));
     }
+}
+
+fn subcmd_check(subcmd: String) -> String {
+    return subcmd;
 }
 
 pub enum RootCmd {
