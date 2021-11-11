@@ -1,8 +1,10 @@
-# crust
+# crust 🍞
 
-![image](https://user-images.githubusercontent.com/81132371/141219125-ea8111e1-d17e-4eb7-a60e-0dfcf38ddfb8.png) 
 
 cli tool for git productivity 
+
+
+![image](https://user-images.githubusercontent.com/81132371/141219125-ea8111e1-d17e-4eb7-a60e-0dfcf38ddfb8.png) 
 
 *written in Rust and packaged for consumption via NPM*
 
