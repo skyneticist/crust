@@ -84,3 +84,5 @@ pub fn check_remote_exists(branch: String) -> bool {
 pub fn get_branch() -> String {
     run_git_cmd(Branch, Some(vec![String::from("--show-current")]))
 }
+
+// gm
