@@ -76,11 +76,11 @@ pub fn check_remote_exists(branch: String) -> bool {
     );
 
     let empty_check = String::from("");
-    match remote_check {
-        x if x == empty_check => false,
+    let result = match remote_check {
         x if x != empty_check => true,
         _ => false,
-    }
+    };
+    result
 }
 
 pub fn get_branch() -> String {
