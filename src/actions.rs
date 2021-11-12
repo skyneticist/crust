@@ -1,5 +1,5 @@
-use crate::types::GitCommands::{Add, Commit, Log, Push, Status};
-use crate::types::RootCmd::Git;
+use crate::types::GitCommands::{Add, Branch, Commit, Log, Push, Reset, Status};
+use crate::types::RootCmd::{Git, Grep};
 use crate::types::*;
 use std::process::Command;
 
@@ -27,7 +27,9 @@ pub fn add_commit_push(remote: Option<bool>, commit_msg: String) -> String {
     let sub_args = vec![String::from("-m"), commit_msg];
     run_git_cmd(Commit, Some(sub_args));
 
-    let is_fresh = remote.unwrap_or(false);
+    // let is_fresh = remote.unwrap_or(false);
+
+    let is_fresh = !check_remote_exists(get_branch());
     let remote_push_args = match is_fresh {
         true => vec![
             String::from("-u"),
@@ -50,4 +52,37 @@ pub fn log_commits(pithy: String) -> String {
         sub_cmd.push(String::from("--pretty=oneline"));
     }
     run_git_cmd(Log, Some(sub_cmd))
+}
+
+pub fn reset_branch(density: String) -> String {
+    run_git_cmd(Reset, Some(vec![density]))
+}
+
+pub fn check_remote_exists(branch: String) -> bool {
+    let br_copy = branch.clone();
+    let br_grep = branch.clone();
+    let remote_check = run_git_cmd(
+        Branch,
+        Some(vec![
+            String::from("-r"),
+            branch,
+            String::from("--contains"),
+            br_copy,
+            String::from("|"),
+            Grep.value(),
+            String::from("-w"),
+            br_grep,
+        ]),
+    );
+
+    let empty_check = String::from("");
+    match remote_check {
+        x if x == empty_check => false,
+        x if x != empty_check => true,
+        _ => false,
+    }
+}
+
+pub fn get_branch() -> String {
+    run_git_cmd(Branch, Some(vec![String::from("--show-current")]))
 }

@@ -1,8 +1,7 @@
-use crate::actions::log_commits;
-use crate::add_commit_push;
-use crate::get_status;
-use crate::types::Actions::{Acp, Log, Status};
+use crate::actions::{log_commits, reset_branch};
+use crate::types::Actions::{Acp, Log, SoftReset, Status};
 use crate::Cli;
+use crate::{add_commit_push, get_status};
 
 pub struct CrustConfig {
     pub verbosity: Option<u8>,
@@ -38,8 +37,9 @@ impl Crust {
 
         let output = match args.command {
             x if x == Acp.value() => Acp.method(sub_cmd),
-            x if x == Status.value() => Status.method(sub_cmd),
             x if x == Log.value() => Log.method(sub_cmd),
+            x if x == SoftReset.value() => SoftReset.method(sub_cmd),
+            x if x == Status.value() => Status.method(sub_cmd),
             _ => String::from("unknown command: ") + &args.command,
         };
         println!("{}", output);
@@ -50,6 +50,7 @@ pub enum Actions {
     Acp,
     Log,
     Status,
+    SoftReset,
 }
 
 impl Actions {
@@ -57,6 +58,7 @@ impl Actions {
         match *self {
             Actions::Acp => String::from("acp"),
             Actions::Log => String::from("log"),
+            Actions::SoftReset => String::from("soft"),
             Actions::Status => String::from("status"),
         }
     }
@@ -67,6 +69,7 @@ impl Actions {
         match *self {
             Actions::Acp => add_commit_push(Some(true), sub_cmd),
             Actions::Log => log_commits(sub_cmd),
+            Actions::SoftReset => reset_branch(sub_cmd),
             Actions::Status => get_status(),
         }
     }
@@ -74,6 +77,7 @@ impl Actions {
 
 pub enum RootCmd {
     Git,
+    Grep,
     // Bash,
     // Ps,
     // Node,
@@ -84,6 +88,7 @@ impl RootCmd {
     pub fn value(&self) -> String {
         match *self {
             RootCmd::Git => String::from("git"),
+            RootCmd::Grep => String::from("grep"),
         }
     }
 }
@@ -91,6 +96,7 @@ impl RootCmd {
 // #[derive(StructOpt)]
 pub enum GitCommands {
     Add,
+    Branch,
     Commit,
     Log,
     Push,
@@ -100,7 +106,7 @@ pub enum GitCommands {
     // Revert,
     // Pop,
     // Apply,
-    // Reset,
+    Reset,
     // Hard,
     // Soft,
 }
@@ -109,13 +115,14 @@ impl GitCommands {
     pub fn value(&self) -> String {
         match *self {
             GitCommands::Add => String::from("add"),
+            GitCommands::Branch => String::from("branch"),
             GitCommands::Commit => String::from("commit"),
             GitCommands::Log => String::from("log"),
             GitCommands::Push => String::from("push"),
             GitCommands::Status => String::from("status"),
             // GitCommands::Pull => String::from("pull"),
             // GitCommands::Stash => String::from("stash"),
-            // GitCommands::Reset => String::from("reset"),
+            GitCommands::Reset => String::from("reset"),
             // GitCommands::Revert => String::from("revert"),
             // GitCommands::Pop => String::from("pop"),
             // GitCommands::Apply => String::from("apply"),
