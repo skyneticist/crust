@@ -29,7 +29,7 @@ pub fn add_commit_push(commit_msg: String) -> String {
 
     // let is_fresh = remote.unwrap_or(false);
 
-    let is_fresh = !check_remote_exists(get_branch());
+    let is_fresh = check_remote_exists(get_branch());
     println!("{}", is_fresh);
     let remote_push_args = match is_fresh {
         true => vec![
