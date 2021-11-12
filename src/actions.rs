@@ -60,18 +60,16 @@ pub fn reset_branch(density: String) -> String {
 
 pub fn check_remote_exists(branch: String) -> bool {
     let br_copy = branch.clone();
-    let br_grep = branch.clone();
     let remote_check = run_git_cmd(
         Branch,
         Some(vec![
             String::from("-r"),
-            branch,
             String::from("--contains"),
-            br_copy,
+            branch,
             String::from("|"),
             Grep.value(),
             String::from("-w"),
-            br_grep,
+            br_copy,
         ]),
     );
     println!("{}", remote_check);
