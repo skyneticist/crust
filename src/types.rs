@@ -67,7 +67,7 @@ impl Actions {
 impl Actions {
     pub fn method(&self, sub_cmd: String) -> String {
         match *self {
-            Actions::Acp => add_commit_push(Some(true), sub_cmd),
+            Actions::Acp => add_commit_push(sub_cmd),
             Actions::Log => log_commits(sub_cmd),
             Actions::SoftReset => reset_branch(sub_cmd),
             Actions::Status => get_status(),

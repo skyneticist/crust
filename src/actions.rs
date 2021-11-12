@@ -21,7 +21,7 @@ pub fn run_git_cmd(arg: GitCommands, sub_args: Option<Vec<String>>) -> String {
     }
 }
 
-pub fn add_commit_push(remote: Option<bool>, commit_msg: String) -> String {
+pub fn add_commit_push(commit_msg: String) -> String {
     run_git_cmd(Add, Some(vec![String::from(".")]));
 
     let sub_args = vec![String::from("-m"), commit_msg];
