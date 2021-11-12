@@ -77,10 +77,7 @@ pub fn check_remote_exists(branch: String) -> bool {
     );
 
     let empty_check = String::from("");
-    let result = match remote_check {
-        x if x != empty_check => true,
-        _ => false,
-    };
+    let result = matches!(remote_check, x if x != empty_check);
     result
 }
 
