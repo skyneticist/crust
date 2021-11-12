@@ -27,8 +27,6 @@ pub fn add_commit_push(commit_msg: String) -> String {
     let sub_args = vec![String::from("-m"), commit_msg];
     run_git_cmd(Commit, Some(sub_args));
 
-    // let is_fresh = remote.unwrap_or(false);
-
     let is_fresh = !check_remote_exists(get_branch());
     let remote_push_args = match is_fresh {
         true => vec![
@@ -38,8 +36,8 @@ pub fn add_commit_push(commit_msg: String) -> String {
         ],
         false => vec![],
     };
-
-    run_git_cmd(Push, Some(remote_push_args))
+    "".to_string()
+    // run_git_cmd(Push, Some(remote_push_args))
 }
 
 pub fn get_status() -> String {
@@ -66,10 +64,10 @@ pub fn check_remote_exists(branch: String) -> bool {
             String::from("-r"),
             String::from("--contains"),
             branch,
-            String::from("|"),
-            Grep.value(),
-            String::from("-w"),
-            br_copy,
+            // String::from("|"),
+            // Grep.value(),
+            // String::from("-w"),
+            // br_copy,
         ]),
     );
     println!("{}", remote_check);
