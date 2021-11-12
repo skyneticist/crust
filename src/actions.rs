@@ -75,6 +75,7 @@ pub fn check_remote_exists(branch: String) -> bool {
             br_grep,
         ]),
     );
+    println!("{}", remote_check);
 
     let empty_check = String::from("");
     let result = matches!(remote_check, x if x != empty_check);
