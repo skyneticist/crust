@@ -61,6 +61,7 @@ pub fn reset_branch(density: String) -> String {
 
 pub fn check_remote_exists(branch: String) -> bool {
     let br_copy = branch.clone(); 
+    println!("{}", br_copy);
     let empty_string = String::from("");
     let is_new_remote = match run_git_cmd(
         Branch,
@@ -68,14 +69,13 @@ pub fn check_remote_exists(branch: String) -> bool {
             String::from("-r"),
             String::from("--contains"),
             branch,
-            String::from("|"),
-            Grep.value(),
-            String::from("-w"),
-            br_copy,
+            // String::from("|"),
+            // Grep.value(),
+            // String::from("-w"),
+            // branch,
         ])){  
             x if x == empty_string => true,
-            x if x != empty_string => false,
-            _ => true
+            _ => false,
         };  
     println!("{:?}", is_new_remote);
     is_new_remote
