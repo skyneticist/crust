@@ -22,21 +22,24 @@ pub fn run_git_cmd(arg: GitCommands, sub_args: Option<Vec<String>>) -> String {
 }
 
 pub fn add_commit_push(commit_msg: String) -> String {
-    run_git_cmd(Add, Some(vec![String::from(".")]));
+    // run_git_cmd(Add, Some(vec![String::from(".")]));
 
     let sub_args = vec![String::from("-m"), commit_msg];
-    run_git_cmd(Commit, Some(sub_args));
+    // run_git_cmd(Commit, Some(sub_args));
 
-    let is_fresh = !check_remote_exists(get_branch());
-    let remote_push_args = match is_fresh {
-        true => vec![
+    let br = get_branch();
+    let br_exists = check_remote_exists(br);
+    // println!("{}", br_exists);
+    let remote_push_args = match br_exists {
+        true => vec![],
+        false => vec![
             String::from("-u"),
             String::from("origin"),
             String::from("HEAD"),
         ],
-        false => vec![],
     };
-    "".to_string()
+    // println!("{:?}", remote_push_args);
+    remote_push_args.join(", ")
     // run_git_cmd(Push, Some(remote_push_args))
 }
 
@@ -57,28 +60,31 @@ pub fn reset_branch(density: String) -> String {
 }
 
 pub fn check_remote_exists(branch: String) -> bool {
-    let br_copy = branch.clone();
-    let remote_check = run_git_cmd(
+    let br_copy = branch.clone(); 
+    let empty_string = String::from("");
+    let is_new_remote = match run_git_cmd(
         Branch,
         Some(vec![
             String::from("-r"),
             String::from("--contains"),
             branch,
-            // String::from("|"),
-            // Grep.value(),
-            // String::from("-w"),
-            // br_copy,
-        ]),
-    );
-    println!("{}", remote_check);
-
-    let empty_check = String::from("");
-    let result = matches!(remote_check, x if x != empty_check);
-    result
+            String::from("|"),
+            Grep.value(),
+            String::from("-w"),
+            br_copy,
+        ])){  
+            x if x == empty_string => true,
+            x if x != empty_string => false,
+            _ => true
+        };  
+    println!("{:?}", is_new_remote);
+    is_new_remote
 }
 
 pub fn get_branch() -> String {
-    run_git_cmd(Branch, Some(vec![String::from("--show-current")]))
+    let args = vec![String::from("--show-current")];
+    run_git_cmd(Branch, Some(args))
+    // println!("{}", String::from(result))
 }
 
 // gm
