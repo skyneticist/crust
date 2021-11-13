@@ -28,11 +28,11 @@ pub fn add_commit_push(commit_msg: String) -> String {
     // run_git_cmd(Commit, Some(sub_args));
 
     let br = get_branch();
-    let br_exists = check_remote_exists(br);
+    let is_new = check_remote_exists(br);
     // println!("{}", br_exists);
-    let remote_push_args = match br_exists {
-        true => vec![],
-        false => vec![
+    let remote_push_args = match is_new {
+        false => vec![],
+        true => vec![
             String::from("-u"),
             String::from("origin"),
             String::from("HEAD"),
