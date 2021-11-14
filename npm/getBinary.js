@@ -16,7 +16,7 @@ function getPlatform() {
 function getBinary() {
     const platform = getPlatform();
     const version = require('../package.json').version;
-    const url = `https://github.com/skyneticist/crust/releases/download/test0/crust-${platform}.tar.gz`;
+    const url = `https://github.com/skyneticist/crust/releases/download/v0.0.1/crust-${platform}.tar.gz`;
     const name = 'crust';
 
     return new Binary(name, url);
