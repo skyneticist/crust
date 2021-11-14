@@ -28,15 +28,15 @@ pub fn add_commit_push(commit_msg: String) -> String {
     // run_git_cmd(Commit, Some(sub_args));
 
     let br = get_branch();
-    let is_new = check_remote_exists(br);
+    let is_new = check_new_branch(br);
     // println!("{}", br_exists);
     let remote_push_args = match is_new {
-        false => vec![],
         true => vec![
             String::from("-u"),
             String::from("origin"),
             String::from("HEAD"),
         ],
+        false => vec![],
     };
     // println!("{:?}", remote_push_args);
     remote_push_args.join(", ")
@@ -59,7 +59,7 @@ pub fn reset_branch(density: String) -> String {
     run_git_cmd(Reset, Some(vec![density]))
 }
 
-pub fn check_remote_exists(branch: String) -> bool {
+pub fn check_new_branch(branch: String) -> bool {
     let br_copy = branch.clone(); 
     println!("{}", br_copy);
     let empty_string = String::from("");
