@@ -19,7 +19,7 @@ function getBinary() {
     const url = `https://github.com/skyneticist/crust/releases/download/test0/crust-${platform}.tar.gz`;
     const name = 'crust';
 
-    return new Binary(url, { name })
+    return new Binary(name, url);
 }
 
 module.exports = getBinary;
