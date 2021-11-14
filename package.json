@@ -1,6 +1,6 @@
 {
   "name": "crust",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "git productivity tool written in Rust",
   "main": "index.js",
   "bin": {
