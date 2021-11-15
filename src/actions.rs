@@ -84,3 +84,8 @@ pub fn get_branch() -> String {
     let args = vec![String::from("--show-current")];
     run_git_cmd(Branch, Some(args))
 }
+
+pub fn show_help() {
+    let help_info = HelpInfo { descriptions: vec!["Add, Commit, Push in one commit".to_string()], commands: vec!["crust acp [commit msg here]".to_string()]};
+    HelpInfo::Display(&help_info);
+}

@@ -131,3 +131,21 @@ impl GitCommands {
         }
     }
 }
+
+pub struct HelpInfo {
+    pub descriptions: Vec<String>,
+    pub commands: Vec<String>,
+}
+
+
+impl HelpInfo {
+    pub fn Display(&self) {
+        for d in &self.descriptions {
+            println!("{}", d);
+        }
+
+        for cmd in &self.commands {
+            println!("{}", cmd);
+        }
+    }
+}
