@@ -22,14 +22,13 @@ pub fn run_git_cmd(arg: GitCommands, sub_args: Option<Vec<String>>) -> String {
 }
 
 pub fn add_commit_push(commit_msg: String) -> String {
-    // run_git_cmd(Add, Some(vec![String::from(".")]));
+    run_git_cmd(Add, Some(vec![String::from(".")]));
 
     let sub_args = vec![String::from("-m"), commit_msg];
-    // run_git_cmd(Commit, Some(sub_args));
+    run_git_cmd(Commit, Some(sub_args));
 
     let br = get_branch();
     let is_new = check_new_branch(br);
-    // println!("{}", br_exists);
     let remote_push_args = match is_new {
         true => vec![
             String::from("-u"),
@@ -38,9 +37,8 @@ pub fn add_commit_push(commit_msg: String) -> String {
         ],
         false => vec![],
     };
-    // println!("{:?}", remote_push_args);
-    remote_push_args.join(", ")
-    // run_git_cmd(Push, Some(remote_push_args))
+    remote_push_args.join(", ");
+    run_git_cmd(Push, Some(remote_push_args))
 }
 
 pub fn get_status() -> String {
@@ -60,7 +58,7 @@ pub fn reset_branch(density: String) -> String {
 }
 
 pub fn check_new_branch(branch: String) -> bool {
-    let br_copy = branch.clone(); 
+    let br_copy = branch.clone();
     println!("{}", br_copy);
     let empty_string = String::from("");
     let is_new_remote = match run_git_cmd(
@@ -69,22 +67,20 @@ pub fn check_new_branch(branch: String) -> bool {
             String::from("-r"),
             String::from("--contains"),
             branch,
-            // String::from("|"),
-            // Grep.value(),
-            // String::from("-w"),
-            // branch,
-        ])){  
-            x if x == empty_string => true,
-            _ => false,
-        };  
-    println!("{:?}", is_new_remote);
+            String::from("|"),
+            Grep.value(),
+            String::from("-w"),
+            br_copy,
+        ]),
+    ) {
+        x if x != empty_string => false,
+        x if x == empty_string => true,
+        _ => false,
+    };
     is_new_remote
 }
 
 pub fn get_branch() -> String {
     let args = vec![String::from("--show-current")];
     run_git_cmd(Branch, Some(args))
-    // println!("{}", String::from(result))
 }
-
-// gm
