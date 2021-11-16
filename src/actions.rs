@@ -1,6 +1,6 @@
-use crate::types::GitCommands::{Add, Commit, Log, Push, Status};
-use crate::types::RootCmd::Git;
-use crate::types::*;
+use crate::types::GitCommands::{Add, Branch, Checkout, Commit, Log, Push, Reset, Status};
+use crate::types::RootCmd::{Git, Grep};
+use crate::types::{GitCommands, HelpInfo};
 use std::process::Command;
 
 pub fn run_git_cmd(arg: GitCommands, sub_args: Option<Vec<String>>) -> String {
@@ -21,14 +21,11 @@ pub fn run_git_cmd(arg: GitCommands, sub_args: Option<Vec<String>>) -> String {
     }
 }
 
-pub fn add_commit_push(remote: Option<bool>, commit_msg: String) -> String {
+pub fn add_commit_push(commit_msg: String) -> String {
     run_git_cmd(Add, Some(vec![String::from(".")]));
+    run_git_cmd(Commit, Some(vec![String::from("-m"), commit_msg]));
 
-    let sub_args = vec![String::from("-m"), commit_msg];
-    run_git_cmd(Commit, Some(sub_args));
-
-    let is_fresh = remote.unwrap_or(false);
-    let remote_push_args = match is_fresh {
+    let remote_push_args = match check_new_branch(get_branch()) {
         true => vec![
             String::from("-u"),
             String::from("origin"),
@@ -36,7 +33,6 @@ pub fn add_commit_push(remote: Option<bool>, commit_msg: String) -> String {
         ],
         false => vec![],
     };
-
     run_git_cmd(Push, Some(remote_push_args))
 }
 
@@ -45,9 +41,65 @@ pub fn get_status() -> String {
 }
 
 pub fn log_commits(pithy: String) -> String {
-    let mut sub_cmd: Vec<String> = vec![];
-    if pithy == "ol" {
-        sub_cmd.push(String::from("--pretty=oneline"));
-    }
+    let sub_cmd = match pithy {
+        x if x == "ol" || x == "oneline" => {
+            vec![String::from("--pretty=oneline")]
+        }
+        _ => vec![],
+    };
     run_git_cmd(Log, Some(sub_cmd))
+}
+
+pub fn checkout_new(branch_name: String) -> String {
+    run_git_cmd(Checkout, Some(vec![String::from("-b"), branch_name]))
+}
+
+pub fn reset_branch(density: String) -> String {
+    run_git_cmd(Reset, Some(vec![density]))
+}
+
+pub fn check_new_branch(branch: String) -> bool {
+    let br_copy = branch.clone();
+    let empty_string = String::from("");
+    match run_git_cmd(
+        Branch,
+        Some(vec![
+            String::from("-r"),
+            String::from("--contains"),
+            branch,
+            String::from("|"),
+            Grep.value(),
+            String::from("-w"),
+            br_copy,
+        ]),
+    ) {
+        x if x != empty_string => false,
+        x if x == empty_string => true,
+        _ => false,
+    }
+}
+
+pub fn get_branch() -> String {
+    run_git_cmd(Branch, Some(vec![String::from("--show-current")]))
+}
+
+pub fn show_help() -> String {
+    HelpInfo::display(&HelpInfo {
+        descriptions: vec![
+            "Add, Commit, Push    ".to_string(),
+            "Checkout new branch  ".to_string(),
+            "Stash, Pull, Apply   ".to_string(),
+            "Reset staged changes ".to_string(),
+            "Get status of branch ".to_string(),
+            "Log git history      ".to_string(),
+        ],
+        commands: vec![
+            "crust acp [commit msg]".to_string(),
+            "crust cob [branch_name]".to_string(),
+            "crust spa".to_string(),
+            "crust soft".to_string(),
+            "crust st  ".to_string(),
+            "crust log".to_string(),
+        ],
+    })
 }
