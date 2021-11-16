@@ -24,3 +24,5 @@ Goals:
   - Create golee except using Rust instead of Go
   - Learn Rust as best as possible 
   - Package Rust binaries and publish them to be consumed via npmjs (just like golee repo/project)
+
+![image](https://user-images.githubusercontent.com/81132371/141902118-4a79f4a5-19fc-4b0b-8d14-75a15cc42a26.png)
