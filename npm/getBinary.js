@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 const { Binary } = require('binary-install');
 const os = require('os');
 

@@ -35,7 +35,6 @@ impl Crust {
 impl Crust {
     pub fn run_cmd(args: Cli) {
         let sub_cmd = args.arg.unwrap_or_else(|| "".to_string());
-
         let output = match args.command {
             x if x == Acp.value() || x == Acp.short_value() => Acp.method(sub_cmd),
             x if x == Cob.value() || x == Cob.short_value() => Cob.method(sub_cmd),
@@ -107,11 +106,6 @@ impl Actions {
 pub enum RootCmd {
     Git,
     Grep,
-    // Help,
-    // Bash,
-    // Ps,
-    // Node,
-    // Python,
 }
 
 impl RootCmd {
@@ -171,8 +165,8 @@ pub struct HelpInfo {
 
 impl HelpInfo {
     pub fn display(&self) -> String {
-        println!("{}", "\n\u{1F419}   Welcome to crust");
-        println!("{}", "     v0.0.1");
+        println!("\n\u{1F419}   Welcome to crust");
+        println!("     v0.0.1");
         let mut table = vec![];
         let mut row: String;
         for (i, cmd) in self.commands.iter().enumerate() {

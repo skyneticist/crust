@@ -42,7 +42,7 @@ pub fn get_status() -> String {
 
 pub fn log_commits(pithy: String) -> String {
     let sub_cmd = match pithy {
-        x if x == String::from("ol") || x == String::from("oneline") => {
+        x if x == "ol" || x == "oneline" => {
             vec![String::from("--pretty=oneline")]
         }
         _ => vec![],
