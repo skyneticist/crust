@@ -64,7 +64,6 @@ pub fn check_new_branch(branch: String) -> bool {
     match run_git_cmd(
         Branch,
         Some(vec![
-            String::from("-r"),
             String::from("--contains"),
             branch,
             String::from("|"),
