@@ -4,7 +4,7 @@
   "description": "git productivity tool written in Rust",
   "main": "index.js",
   "bin": {
-    "crust": "./npm/run.js"
+    "crust": "npm/run.js"
   },
   "scripts": {
     "postinstall": "node npm/install.js"

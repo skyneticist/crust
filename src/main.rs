@@ -1,8 +1,6 @@
 mod actions;
 mod types;
 
-// use crate::types::CrustConfig;
-use crate::actions::{add_commit_push, get_status};
 use crate::types::Crust;
 use structopt::StructOpt;
 

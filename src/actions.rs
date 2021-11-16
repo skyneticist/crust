@@ -1,8 +1,6 @@
-use crate::types::GitCommands::Checkout;
-use crate::types::GitCommands::Reset;
-use crate::types::GitCommands::{Add, Branch, Commit, Log, Push, Status};
+use crate::types::GitCommands::{Add, Branch, Checkout, Commit, Log, Push, Reset, Status};
 use crate::types::RootCmd::{Git, Grep};
-use crate::types::*;
+use crate::types::{GitCommands, HelpInfo};
 use std::process::Command;
 
 pub fn run_git_cmd(arg: GitCommands, sub_args: Option<Vec<String>>) -> String {

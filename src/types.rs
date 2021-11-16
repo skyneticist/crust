@@ -1,11 +1,8 @@
-use crate::actions::checkout_new;
-use crate::actions::show_help;
-use crate::actions::{log_commits, reset_branch};
-use crate::types::Actions::Cob;
-use crate::types::Actions::Help;
-use crate::types::Actions::{Acp, Log, SoftReset, Status};
+use crate::actions::{
+    add_commit_push, checkout_new, get_status, log_commits, reset_branch, show_help,
+};
+use crate::types::Actions::{Acp, Cob, Help, Log, SoftReset, Status};
 use crate::Cli;
-use crate::{add_commit_push, get_status};
 
 pub struct CrustConfig {
     pub verbosity: Option<u8>,
