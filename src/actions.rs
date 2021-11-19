@@ -59,18 +59,10 @@ pub fn reset_branch(density: String) -> String {
 }
 
 pub fn check_new_branch(branch: String) -> bool {
-    let br_copy = branch.clone();
     let empty_string = String::from("");
     match run_git_cmd(
         Branch,
-        Some(vec![
-            String::from("--contains"),
-            branch,
-            String::from("|"),
-            Grep.value(),
-            String::from("-w"),
-            br_copy,
-        ]),
+        Some(vec![String::from("|"), String::from("findstr"), branch]),
     ) {
         x if x != empty_string => false,
         x if x == empty_string => true,
