@@ -81,17 +81,21 @@ pub fn check_new_branch(branch: String) -> bool {
         }
     }
     let left_ecode = left_child.wait().expect("failed to wait on left_child");
-    let right_ecode = right_child.wait().expect("failed to wait on right_child");
+    let right_ecode = right_child.wait_with_output().expect("failed to wait on right_child");
     println!("{}", left_ecode);
-    println!("{}", right_ecode);
+    println!("{:?}", right_ecode.stdout);
 
-    match run_git_cmd(
-        Branch,
-        Some(vec![String::from("|"), String::from("findstr")]),
-    ) {
-        x if x.is_empty() => true,
+    match right_ecode.stdout {
+        x if x.is_empty() => true, 
         _ => false,
     }
+    // match run_git_cmd(
+    //     Branch,
+    //     Some(vec![String::from("|"), String::from("findstr")]),
+    // ) {
+    //     x if x.is_empty() => true,
+    //     _ => false,
+    // }
 }
 
 pub fn get_branch() -> String {
