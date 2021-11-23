@@ -77,6 +77,7 @@ pub fn check_new_branch(branch: String) -> bool {
         let mut right_out = right_child.stdin.take().unwrap();
         for line in left_in.lines() {
             writeln!(&mut right_out, "{}", line.unwrap()).unwrap();
+            println!("{:?}", right_out);
         }
     }
     let left_ecode = left_child.wait().expect("failed to wait on left_child");
