@@ -62,6 +62,7 @@ pub fn reset_branch(density: String) -> String {
 pub fn check_new_branch(branch: String) -> bool {
     let mut left_child = Command::new("git")
         .arg("branch")
+        .stdin(Stdio::piped())
         .stdout(Stdio::piped())
         .spawn()
         .expect("failed to execute left_child");
@@ -83,7 +84,7 @@ pub fn check_new_branch(branch: String) -> bool {
     let left_ecode = left_child.wait().expect("failed to wait on left_child");
     let right_ecode = right_child.wait_with_output().expect("failed to wait on right_child");
     println!("{}", left_ecode);
-    println!("{:?}", right_ecode.stdout);
+    println!("{}", String::from_utf8_lossy(&right_ecode.stdout));
 
     match right_ecode.stdout {
         x if x.is_empty() => true, 
