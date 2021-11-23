@@ -1,7 +1,8 @@
 use crate::types::GitCommands::{Add, Branch, Checkout, Commit, Log, Push, Reset, Status};
-use crate::types::RootCmd::{Git, Grep};
+use crate::types::RootCmd::Git;
 use crate::types::{GitCommands, HelpInfo};
-use std::process::Command;
+use std::io::{BufRead, BufReader, Write};
+use std::process::{Command, Stdio};
 
 pub fn run_git_cmd(arg: GitCommands, sub_args: Option<Vec<String>>) -> String {
     let sub_args = match sub_args {
@@ -59,13 +60,35 @@ pub fn reset_branch(density: String) -> String {
 }
 
 pub fn check_new_branch(branch: String) -> bool {
-    let empty_string = String::from("");
+    let mut left_child = Command::new("git")
+        .arg("branch")
+        .stdout(Stdio::piped())
+        .spawn()
+        .expect("failed to execute left_child");
+
+    let mut right_child = Command::new("findstr")
+        .arg(branch)
+        .stdin(Stdio::piped())
+        .spawn()
+        .expect("failed to execut right_chld");
+
+    {
+        let left_in = BufReader::new(left_child.stdout.take().unwrap());
+        let mut right_out = right_child.stdin.take().unwrap();
+        for line in left_in.lines() {
+            writeln!(&mut right_out, "{}", line.unwrap()).unwrap();
+        }
+    }
+    let left_ecode = left_child.wait().expect("failed to wait on left_child");
+    let right_ecode = right_child.wait().expect("failed to wait on right_child");
+    println!("{}", left_ecode);
+    println!("{}", right_ecode);
+
     match run_git_cmd(
         Branch,
-        Some(vec![String::from("|"), String::from("findstr"), branch]),
+        Some(vec![String::from("|"), String::from("findstr")]),
     ) {
-        x if x != empty_string => false,
-        x if x == empty_string => true,
+        x if x.is_empty() => true,
         _ => false,
     }
 }
@@ -94,4 +117,19 @@ pub fn show_help() -> String {
         ],
     })
 }
-// 
+//
+// pub fn run_git_cmd(arg: GitCommands, sub_args: Option<Vec<String>>, chain_cmd: Option<Vec<RootCmd>>) -> String {
+//     let sub_args = match sub_args {
+//         Some(values) => values,
+//         None => Vec::new(),
+//     };
+//     let cmd = Command::new(Git.value())
+//         .arg(arg.value())
+//         .args(sub_args)
+//         .stdout(Stdio::piped()).spawn();
+
+//     let cmd2 = Command::new(chain_cmd)
+//         .stdin(cmd.unwrap())
+//         .output()
+//         .unwrap_or_else(|e| { panic!("failed to execute process: {}", e)});
+// }
