@@ -1,3 +1,6 @@
+// have seen the npm install work on windows
+// now trying for Mac OS
+
 mod actions;
 mod types;
 
