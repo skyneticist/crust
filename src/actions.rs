@@ -22,6 +22,9 @@ pub fn run_git_cmd(arg: GitCommands, sub_args: Option<Vec<String>>) -> String {
 }
 
 pub fn add_commit_push(commit_msg: String) -> String {
+    if commit_msg.is_empty() {
+        return "You must supply a commit message when committing code".to_string();
+    }
     run_git_cmd(Add, Some(vec![String::from(".")]));
     run_git_cmd(Commit, Some(vec![String::from("-m"), commit_msg]));
 
@@ -51,6 +54,9 @@ pub fn log_commits(pithy: String) -> String {
 }
 
 pub fn checkout_new(branch_name: String) -> String {
+    if branch_name.is_empty() {
+        return "You must supply a branch name!".to_string();
+    }
     run_git_cmd(Checkout, Some(vec![String::from("-b"), branch_name]))
 }
 
@@ -59,6 +65,10 @@ pub fn reset_branch(density: String) -> String {
 }
 
 pub fn check_new_branch(branch: String) -> bool {
+    if branch.is_empty() {
+        panic!("branch name was not passed to check_new_branch");
+    }
+
     let br_copy = branch.clone();
     let empty_string = String::from("");
     match run_git_cmd(
