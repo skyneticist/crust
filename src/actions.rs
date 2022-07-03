@@ -46,6 +46,7 @@ pub fn open_azure() -> String {
     }
 }
 
+// not working currently
 pub fn open_devops() -> String {
     let url = "https://dev.azure.com/";
     let output = Command::new("explorer")
