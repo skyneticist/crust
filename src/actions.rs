@@ -34,6 +34,7 @@ pub fn ask_stack_overflow(query: String) -> String {
     }
 }
 
+// also not working
 pub fn open_azure() -> String {
     let url = "https://portal.azure.com/";
     let output = Command::new("explorer")
