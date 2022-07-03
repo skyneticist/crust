@@ -26,10 +26,11 @@
     "url": "https://github.com/skyneticist/crust/issues"
   },
   "homepage": "https://github.com/skyneticist/crust#readme",
-  "dependencies": {
-    "binary-install": "^0.1.1"
-  },
+  "dependencies": {},
   "files": [
     "npm/**/*"
-  ]
+  ],
+  "devDependencies": {
+    "binary-install": "^0.1.1"
+  }
 }
