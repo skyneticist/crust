@@ -1,35 +1,35 @@
 {
-  "name": "crust",
-  "version": "0.2.1",
-  "description": "git productivity tool written in Rust",
-  "main": "index.js",
-  "bin": {
-    "crust": "npm/run.js"
-  },
-  "scripts": {
-    "postinstall": "node npm/install.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/skyneticist/crust.git"
-  },
-  "keywords": [
-    "rust",
-    "cli",
-    "git",
-    "npm",
-    "tool"
-  ],
-  "author": "skyneticist",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/skyneticist/crust/issues"
-  },
-  "homepage": "https://github.com/skyneticist/crust#readme",
-  "dependencies": {
-    "binary-install": "^0.1.1"
-  },
-  "files": [
-    "npm/**/*"
-  ]
+    "name": "crust",
+    "version": "0.2.1",
+    "description": "git productivity tool written in Rust",
+    "main": "index.js",
+    "bin": {
+        "crust": "npm/run.js"
+    },
+    "scripts": {
+        "postinstall": "node npm/install.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/skyneticist/crust.git"
+    },
+    "keywords": [
+        "rust",
+        "cli",
+        "git",
+        "npm",
+        "tool"
+    ],
+    "author": "skyneticist",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/skyneticist/crust/issues"
+    },
+    "homepage": "https://github.com/skyneticist/crust#readme",
+    "dependencies": {
+        "binary-install": "^0.1.1"
+    },
+    "files": [
+        "npm/**/*"
+    ]
 }
