@@ -2,7 +2,7 @@ use crate::actions::{
     add_commit_push, checkout_new, get_status, log_commits, reset_branch, show_help,
 };
 use crate::types::Actions::{Acp, Cob, Help, Log, SoftReset, Status};
-use crate::Cli;
+use structopt::StructOpt;
 
 pub struct CrustConfig {
     pub verbosity: Option<u8>,
@@ -32,8 +32,22 @@ impl Crust {
     }
 }
 
+#[derive(StructOpt)]
+pub struct Cli {
+    command: String,
+    arg: Option<String>,
+}
+
 impl Crust {
-    pub fn run_cmd(args: Cli) {
+    pub fn run(config: Option<CrustConfig>) {
+        if Some(&config).is_some() {
+            Crust::new(config);
+        } else {
+            Crust::new(None);
+        }
+
+        let args: Cli = Cli::from_args();
+
         let sub_cmd = args.arg.unwrap_or_else(|| "".to_string());
         let output = match args.command {
             x if x == Acp.value() || x == Acp.short_value() => Acp.method(sub_cmd),
