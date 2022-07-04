@@ -123,7 +123,7 @@ impl Actions {
             Actions::Help => show_help(),
             Actions::Log => log_commits(sub_cmd),
             Actions::Go => ask_google(sub_cmd),
-            Actions::So => ask_stack_overflow(sub_cmd),
+            Actions::So => ask_stack_overflow(&sub_cmd),
             Actions::SoftReset => reset_branch(sub_cmd),
             Actions::Status => get_status(),
         }

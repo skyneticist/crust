@@ -22,10 +22,11 @@ pub fn run_git_cmd(arg: GitCommands, sub_args: Option<Vec<String>>) -> String {
     }
 }
 
-pub fn ask_stack_overflow(query: String) -> String {
-    let question_url = "https://stackoverflow.com";
-    let output = Command::new("explorer")
-        .arg(question_url)
+pub fn ask_stack_overflow(query: &str) -> String {
+    let question_url: &str = "https://stackoverflow.com/search?q=";
+    let question_arg: &str = &[question_url, &query.replace(" ", "+")].join("");
+    let output: std::process::Output = Command::new("open")
+        .arg(question_arg)
         .output()
         .expect("problem opening stack overflow!");
     match String::from_utf8(output.stdout) {
@@ -34,10 +35,9 @@ pub fn ask_stack_overflow(query: String) -> String {
     }
 }
 
-// also not working
 pub fn open_azure() -> String {
     let url = "https://portal.azure.com/";
-    let output = Command::new("explorer")
+    let output = Command::new("open")
         .arg(url)
         .output()
         .expect("could not open Azure portal");
@@ -47,10 +47,9 @@ pub fn open_azure() -> String {
     }
 }
 
-// not working currently
 pub fn open_devops() -> String {
     let url = "https://dev.azure.com/";
-    let output = Command::new("explorer")
+    let output = Command::new("open")
         .arg(url)
         .output()
         .expect("could not open Azure DevOps");
@@ -60,11 +59,24 @@ pub fn open_devops() -> String {
     }
 }
 
-// pub fn open_environment() -> String {
-//     String::from("")
-//     // Need to open dev ops, azure portal, jenkins, octopus, vs code, vs, docker, etc
-//     // Need to handle anything that promotes convenience
-// }
+pub fn open_octopus() -> String {
+    let url = "https://octopus.deploy";
+    let output = Command::new("open")
+        .arg(url)
+        .output()
+        .expect("Octopus website to open");
+    match String::from_utf8(output.stdout) {
+        Ok(output) => output,
+        Err(_) => String::from("Error occurred at open_octopus"),
+    }
+}
+
+pub fn open_environment() -> String {
+    open_azure();
+    open_devops();
+    open_octopus();
+    String::from("Ready to go!")
+}
 
 pub fn ask_google(query: String) -> String {
     let url = "https://google.com/";
