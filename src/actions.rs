@@ -1,6 +1,10 @@
-use crate::types::GitCommands::{Add, Branch, Checkout, Commit, Log, Push, Reset, Status};
-use crate::types::RootCmd::{Git, Grep};
-use crate::types::{GitCommands, HelpInfo};
+use crate::types::git::GitCommands;
+use crate::types::{
+    GitCommands::{Add, Branch, Checkout, Commit, Log, Push, Reset, Status},
+    RootCmd::{Git, Grep},
+};
+
+use crate::types::;
 use std::fs;
 use std::process::Command;
 

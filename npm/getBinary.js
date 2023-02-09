@@ -1,6 +1,8 @@
 const { Binary } = require('binary-install');
 const os = require('os');
 
+let name = '';
+
 function getPlatform() {
     const type = os.type();
     const arch = os.arch();
