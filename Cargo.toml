@@ -8,4 +8,4 @@ license = "MIT"
 
 [dependencies]
 colored = "2.0.0"
-structopt = "0.3.13"
+structopt = "0.3.26"

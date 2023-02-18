@@ -173,13 +173,13 @@ pub enum GitCommands {
     Push,
     Status,
     Reset,
-    Pull,
-    Stash,
-    Revert,
-    Pop,
-    Apply,
-    Hard,
-    Soft,
+    // Pull,
+    // Stash,
+    // Revert,
+    // Pop,
+    // Apply,
+    // Hard,
+    // Soft,
 }
 
 impl GitCommands {
@@ -193,13 +193,13 @@ impl GitCommands {
             GitCommands::Push => String::from("push"),
             GitCommands::Status => String::from("status"),
             GitCommands::Reset => String::from("reset"),
-            GitCommands::Pull => String::from("pull"),
-            GitCommands::Stash => String::from("stash"),
-            GitCommands::Revert => String::from("revert"),
-            GitCommands::Pop => String::from("pop"),
-            GitCommands::Apply => String::from("apply"),
-            GitCommands::Hard => String::from("hard"),
-            GitCommands::Soft => String::from("soft"),
+            // GitCommands::Pull => String::from("pull"),
+            // GitCommands::Stash => String::from("stash"),
+            // GitCommands::Revert => String::from("revert"),
+            // GitCommands::Pop => String::from("pop"),
+            // GitCommands::Apply => String::from("apply"),
+            // GitCommands::Hard => String::from("hard"),
+            // GitCommands::Soft => String::from("soft"),
         }
     }
 }
