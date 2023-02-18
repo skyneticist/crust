@@ -1,2 +1,7 @@
 /target
-steps.sh
+/builds
+
+package.json
+start.js
+uninstall.js
+pre-install.js
