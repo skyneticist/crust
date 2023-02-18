@@ -1,5 +1,5 @@
 {
-  "name": "@skyneticist/crust",
+  "name": "crust",
   "version": "0.1.0",
   "description": "Crust - another git cli tool",
   "main": "start.js",
