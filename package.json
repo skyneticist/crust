@@ -1,6 +1,6 @@
 {
   "name": "crust",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "description": "Crust - another git cli tool",
   "main": "start.js",
   "directories": {
@@ -12,7 +12,6 @@
     "uninstall": "node ./uninstall.js"
   },
   "keywords": [],
-  
   "license": "MIT",
   "files": [
     "pre-install.js",
@@ -22,4 +21,3 @@
     "LICENSE"
   ]
 }
-    
