@@ -1,5 +1,5 @@
 [package]
-name = "gg"
+name = "ggfb"
 version = "0.1.0"
 edition = "2018"
 description = "Crust - another git cli tool"
