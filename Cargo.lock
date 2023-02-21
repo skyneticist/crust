@@ -55,7 +55,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "crust"
+name = "gg"
 version = "0.1.0"
 dependencies = [
  "colored",
