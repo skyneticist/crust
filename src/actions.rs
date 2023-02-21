@@ -59,24 +59,24 @@ pub fn open_devops() -> String {
     }
 }
 
-pub fn open_octopus() -> String {
-    let url = "https://octopus.deploy";
-    let output = Command::new("open")
-        .arg(url)
-        .output()
-        .expect("Octopus website to open");
-    match String::from_utf8(output.stdout) {
-        Ok(output) => output,
-        Err(_) => String::from("Error occurred at open_octopus"),
-    }
-}
+// pub fn open_octopus() -> String {
+//     let url = "https://octopus.deploy";
+//     let output = Command::new("open")
+//         .arg(url)
+//         .output()
+//         .expect("Octopus website to open");
+//     match String::from_utf8(output.stdout) {
+//         Ok(output) => output,
+//         Err(_) => String::from("Error occurred at open_octopus"),
+//     }
+// }
 
-pub fn open_environment() -> String {
-    open_azure();
-    open_devops();
-    open_octopus();
-    String::from("Ready to go!")
-}
+// pub fn open_environment() -> String {
+//     open_azure();
+//     open_devops();
+//     open_octopus();
+//     String::from("Ready to go!")
+// }
 
 pub fn ask_google(query: String) -> String {
     let url = "https://google.com/";

@@ -8,6 +8,12 @@ use crate::types::Actions::{
 use colored::*;
 use structopt::StructOpt;
 
+#[derive(StructOpt)]
+pub struct Cli {
+    command: String,
+    arg: Option<String>,
+}
+
 pub struct CrustConfig {
     pub verbosity: Option<u8>,
     pub hide: Option<bool>,
@@ -34,15 +40,7 @@ impl Crust {
 
         Crust { config }
     }
-}
 
-#[derive(StructOpt)]
-pub struct Cli {
-    command: String,
-    arg: Option<String>,
-}
-
-impl Crust {
     pub fn run(config: Option<CrustConfig>) {
         if Some(&config).is_some() {
             Crust::new(config);
@@ -74,12 +72,6 @@ impl Crust {
     }
 }
 
-fn display_msg() -> String {
-    String::from(" Welcome to Crust \u{1F35E} \nTry typing `crust help`")
-        .green()
-        .to_string()
-}
-
 pub enum Actions {
     Acp,
     Cloud,
@@ -92,24 +84,6 @@ pub enum Actions {
     So,
     Status,
     SoftReset,
-}
-
-impl Actions {
-    pub fn value(&self) -> String {
-        match *self {
-            Actions::Acp => String::from("done"),
-            Actions::Cloud => String::from("azure"),
-            Actions::Cob => String::from("cob"),
-            Actions::DevOps => String::from("devops"),
-            Actions::PullAll => String::from("pullall"),
-            Actions::Help => String::from("help"),
-            Actions::Log => String::from("log"),
-            Actions::Go => String::from("google"),
-            Actions::So => String::from("stof"),
-            Actions::SoftReset => String::from("soft"),
-            Actions::Status => String::from("st"),
-        }
-    }
 }
 
 impl Actions {
@@ -128,9 +102,7 @@ impl Actions {
             Actions::Status => get_status(),
         }
     }
-}
 
-impl Actions {
     pub fn short_value(&self) -> String {
         match *self {
             Actions::Acp => String::from("acp"),
@@ -144,6 +116,22 @@ impl Actions {
             Actions::So => String::from("so"),
             Actions::SoftReset => String::from("sr"),
             Actions::Status => String::from("s"),
+        }
+    }
+
+    pub fn value(&self) -> String {
+        match *self {
+            Actions::Acp => String::from("done"),
+            Actions::Cloud => String::from("azure"),
+            Actions::Cob => String::from("cob"),
+            Actions::DevOps => String::from("devops"),
+            Actions::PullAll => String::from("pullall"),
+            Actions::Help => String::from("help"),
+            Actions::Log => String::from("log"),
+            Actions::Go => String::from("google"),
+            Actions::So => String::from("stof"),
+            Actions::SoftReset => String::from("soft"),
+            Actions::Status => String::from("st"),
         }
     }
 }
@@ -236,4 +224,10 @@ impl HelpInfo {
         );
         table.join("")
     }
+}
+
+fn display_msg() -> String {
+    String::from(" Welcome to Crust \u{1F35E} \nTry typing `crust help`")
+        .green()
+        .to_string()
 }

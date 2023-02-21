@@ -2,7 +2,7 @@
 
 const { exec } = require("child_process");
 
-exec(`alias gg="ggfb"`, (error, stdout, stderr) => {
+exec('alias gg="ggfb"', (error, stdout, stderr) => {
     console.log(stdout);
     if (error || stderr) {
         console.log(error || stderr);
