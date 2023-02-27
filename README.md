@@ -11,7 +11,7 @@ cli tool for git productivity
 
 This repo is identical with [@skyneticist/golee](https://github.com/skyneticist/golee) in terms of functionality and purpose: Increase productivity working with git in command-line.
 
-https://www.npmjs.com/package/crust
+https://www.npmjs.com/package/ggfb
 
 Of course, crust 🍞 is written in Rust instead of Go. 
 
